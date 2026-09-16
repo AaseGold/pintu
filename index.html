@@ -188,7 +188,9 @@
     const state={image:quickImages[0].src,size:initialSize,order:[],selected:null,moves:0,seconds:0,elapsedMs:0,startedAt:0,timer:null,playing:false,numbers:false,rankingEligible:true,rankSize:3,galleryIndex:0,quickIndex:0};
     const KEY='puzzle-rankings-v1';
     function show(id){$$('.screen').forEach(x=>x.classList.remove('active'));$(id).classList.add('active');window.scrollTo({top:0,behavior:'smooth'})}
-    function format(s){return`${String(Math.floor(s/60)).padStart(2,'0')}:${String(s%60).padStart(2,'0')}`}\r\n    function rankDurationMs(row){const milliseconds=Number(row.durationMs);return Number.isFinite(milliseconds)&&milliseconds>=0?Math.round(milliseconds):Math.max(0,Math.round((Number(row.seconds)||0)*1000))}\r\n    function formatMilliseconds(ms){return String(Math.max(0,Math.round(ms))%1000).padStart(3,'0')}
+    function format(s){return`${String(Math.floor(s/60)).padStart(2,'0')}:${String(s%60).padStart(2,'0')}`}
+    function rankDurationMs(row){const milliseconds=Number(row.durationMs);return Number.isFinite(milliseconds)&&milliseconds>=0?Math.round(milliseconds):Math.max(0,Math.round((Number(row.seconds)||0)*1000))}
+    function formatMilliseconds(ms){return String(Math.max(0,Math.round(ms))%1000).padStart(3,'0')}
     function toast(s){const e=$('#toast');e.textContent=s;e.classList.add('show');clearTimeout(toast.t);toast.t=setTimeout(()=>e.classList.remove('show'),1700)}
     function difficultyLabel(size){return size===2?'轻松 · 2 × 2':size===4?'挑战 · 4 × 4':size===6?'变态 · 6 × 6':'经典 · 3 × 3'}
     function lastPlayedSize(){const value=Number(localStorage.getItem(LAST_SIZE_KEY));return[2,3,4,6].includes(value)?value:3}
