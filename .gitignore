@@ -1,4 +1,5 @@
 .wiscode/
+.workbuddy/
 __pycache__/
 *.py[cod]
 /work/
