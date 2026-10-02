@@ -1,0 +1,5 @@
+fastapi
+uvicorn[standard]
+PyJWT
+python-multipart
+tencentcloud-sdk-python

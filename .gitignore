@@ -1,1 +1,5 @@
 .wiscode/
+__pycache__/
+*.py[cod]
+/work/
+/tmp/

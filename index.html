@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
   <meta name="theme-color" content="#f7f2e8">
-  <meta name="app-version" content="v0.2">
+  <meta name="app-version" content="v0.2.5">
   <title>拼了个图</title>
   <style>
     :root{--ink:#28251f;--muted:#7b766c;--paper:#f7f2e8;--card:rgba(255,253,248,.88);--line:rgba(40,37,31,.12);--orange:#ef6a3a;--green:#3f7165;--shadow:0 18px 60px rgba(47,39,27,.12)}
@@ -127,13 +127,45 @@
     @media(max-width:560px){.success-close{right:10px;top:10px;width:31px;height:31px}}
     /* Persistent local player */
     .top-actions{display:flex;align-items:center;gap:9px}.user-chip{height:40px;padding:0 13px 0 9px;border:1px solid var(--line);border-radius:12px;background:rgba(255,255,255,.56);display:inline-flex;align-items:center;gap:8px;white-space:nowrap;cursor:pointer;transition:.18s ease}.user-chip:hover{transform:translateY(-2px);background:rgba(255,255,255,.9);box-shadow:0 8px 20px rgba(39,37,31,.08)}.user-avatar{width:26px;height:26px;border-radius:9px;background:var(--green);color:#fff;display:grid;place-items:center;font-size:12px;font-weight:900}.user-name{max-width:150px;overflow:hidden;text-overflow:ellipsis;font-size:13px;font-weight:900}
-    .rename-card{width:min(390px,100%);padding:30px;border-radius:25px;background:#fffdf8;box-shadow:0 30px 100px rgba(0,0,0,.25)}.rename-card h2{margin:0 0 8px;font-size:25px}.rename-card>p{margin:0 0 20px;color:var(--muted);font-size:13px;line-height:1.6}.rename-field{display:block;margin-bottom:7px;font-size:13px;font-weight:900}.rename-input{width:100%;height:50px;padding:0 14px;border:1px solid var(--line);border-radius:14px;background:#fff;font-weight:800;outline:none;transition:.18s}.rename-input:focus{border-color:var(--orange);box-shadow:0 0 0 3px rgba(239,106,58,.13)}.rename-error{min-height:20px;margin:6px 0 12px;color:#c2451c;font-size:12px}.rename-actions{display:grid;grid-template-columns:1fr 1.25fr;gap:9px}.rename-actions .action-btn{min-height:48px}
+    .rename-card,.confirm-card{width:min(390px,100%);padding:30px;border-radius:25px;background:#fffdf8;box-shadow:0 30px 100px rgba(0,0,0,.25)}.rename-card h2,.confirm-card h2{margin:0 0 14px;font-size:25px}.rename-input{width:100%;height:50px;padding:0 14px;border:1px solid var(--line);border-radius:14px;background:#fff;font-weight:800;outline:none;transition:.18s}.rename-input:focus{border-color:var(--orange);box-shadow:0 0 0 3px rgba(239,106,58,.13)}.rename-error{margin:7px 0 0;color:#c2451c;font-size:12px}.rename-error:empty{display:none}.rename-actions{display:grid;gap:9px;margin-top:18px}.rename-actions .action-btn{min-height:46px;border-radius:12px}.rename-actions .logout-btn{color:#b4472a;background:transparent}.confirm-card p{margin:0 0 22px;color:var(--muted);font-size:14px;line-height:1.7}.confirm-actions{display:grid;grid-template-columns:1fr 1.2fr;gap:9px}.confirm-actions .action-btn{min-height:46px;border-radius:12px}
     @media(max-width:560px){.top-actions{gap:6px}.user-chip{height:38px;padding:0 8px}.user-name{max-width:92px;font-size:12px}.user-avatar{display:none}.top-rank{font-size:0;gap:0}.top-rank svg{width:18px}.rename-card{padding:26px 20px}}
-  </style>
+
+    .login-page{max-width:520px;margin:0 auto}
+    .login-card{margin-top:14px;padding:25px;border:1px solid var(--line);border-radius:22px;background:rgba(255,255,255,.68);box-shadow:var(--shadow)}
+    #login .ranking-title h1{font-size:clamp(28px,5vw,38px);letter-spacing:-.035em}
+    .auth-options{display:grid;gap:10px}
+    .auth-option{width:100%;min-height:62px;padding:10px 13px;border:1px solid var(--line);border-radius:15px;background:rgba(255,255,255,.7);display:flex;align-items:center;gap:12px;cursor:pointer;text-align:left;transition:.16s ease}
+    .auth-option:hover:not(:disabled),.auth-option.active{border-color:rgba(239,106,58,.55);background:#fff;box-shadow:0 8px 20px rgba(39,37,31,.08)}
+    .auth-option:disabled{cursor:not-allowed;opacity:.58}
+    .auth-icon{width:40px;height:40px;flex:0 0 auto;border-radius:12px;display:grid;place-items:center;color:#fff;font-weight:900}
+    .auth-icon.phone{background:var(--orange)}.auth-icon.qq{background:#12a8e8}.auth-icon.wechat{background:#07c160}
+    .auth-copy{flex:1;min-width:0}.auth-copy strong{display:block;font-size:14px}.auth-copy span{display:block;margin-top:3px;color:var(--muted);font-size:11px}
+    .auth-arrow{color:var(--muted);font-size:18px;transition:transform .16s ease}.auth-option.active .auth-arrow{transform:rotate(90deg)}.auth-soon{padding:4px 7px;border-radius:999px;background:#e8e5df;color:var(--muted);font-size:10px;font-weight:800}
+    .phone-panel{padding:2px 2px 4px}
+    .phone-form{display:grid;gap:10px}.phone-form input{width:100%;height:45px;padding:0 13px;border:1px solid var(--line);border-radius:12px;background:#fff;color:var(--ink);outline:none}.phone-form input:focus{border-color:var(--orange);box-shadow:0 0 0 3px rgba(239,106,58,.11)}
+    .code-row{display:grid;grid-template-columns:1fr auto;gap:8px}.send-code{min-width:108px;padding:0 12px;border:1px solid var(--line);border-radius:12px;background:#fff;font-size:12px;font-weight:800;cursor:pointer}.send-code:disabled{cursor:not-allowed;color:var(--muted)}
+    .bind-submit{height:46px;border:0;border-radius:12px;background:var(--orange);color:#fff;font-weight:900;cursor:pointer}.bind-submit:disabled{opacity:.6;cursor:wait}
+    .bind-privacy{margin:10px 0 0;color:var(--muted);font-size:10px;line-height:1.6;text-align:center}
+    .rank-empty-bar{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:10px;color:var(--muted);font-size:12px}
+    .rank-login{border:0;border-radius:9px;padding:5px 11px;background:rgba(239,106,58,.12);color:#ef6a3a;font-size:12px;font-weight:800;cursor:pointer}
+    .rank-row.mine{border:2px solid #e34f43;border-radius:999px;background:rgba(227,79,67,.055);box-shadow:0 0 0 3px rgba(227,79,67,.08)}
+    .rank-loading{padding:52px 20px;text-align:center;color:var(--muted);font-size:13px}
+    .pending-ranks{display:grid;gap:10px;margin-top:18px;padding-top:17px;border-top:1px dashed rgba(239,106,58,.4)}
+    .pending-ranks-title{color:#c64b24;font-size:12px;font-weight:900}
+    .pending-ranks .rank-row{background:rgba(239,106,58,.065);border-color:rgba(239,106,58,.22)}
+    .pending-ranks .rank-no{background:rgba(239,106,58,.12);color:#c64b24;font-size:13px}
+    .pending-estimate{grid-column:1/-1;margin:-5px 0 1px 62px;color:#c64b24;font-size:11px;font-weight:800}
+    .pending-login{display:inline;padding:0;border:0;background:transparent;color:#e35329;font:inherit;font-size:.58em;font-weight:900;vertical-align:baseline;cursor:pointer}
+    .pending-login:hover{text-decoration:underline}
+    .rank-pagination{display:flex;align-items:center;justify-content:center;gap:12px;margin-top:16px;color:var(--muted);font-size:12px}
+    .rank-pagination button{height:32px;padding:0 12px;border:1px solid var(--line);border-radius:9px;background:rgba(255,255,255,.7);color:var(--ink);font-size:12px;font-weight:800;cursor:pointer}
+    .rank-pagination button:disabled{cursor:default;opacity:.38}
+    .board-shell,.board{width:100%}.tile{min-width:0;min-height:0}
+</style>
 </head>
 <body>
   <main class="app">
-    <header class="topbar"><div class="brand"><button id="versionBtn" class="brand-mark" type="button" aria-label="显示当前版本" title="显示当前版本"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h6v6H4zM14 4h6v6h-6zM4 14h6v6H4zM14 14h6v6h-6z"/><path d="M7 10v4M17 10v4M10 7h4M10 17h4"/></svg></button>拼了个图 <span id="appVersion" class="app-version" aria-label="当前版本"></span></div><div class="top-actions"><button id="userChip" class="user-chip" type="button" title="修改名字"><span class="user-avatar">我</span><span id="userName" class="user-name"></span></button><button id="rankBtn" class="top-rank"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 21h8M12 17v4M7 4H4v3a4 4 0 0 0 4 4M17 4h3v3a4 4 0 0 1-4 4"/><path d="M8 3h8v7a4 4 0 0 1-8 0V3z"/></svg>排行榜</button></div></header>
+    <header class="topbar"><div class="brand"><button id="versionBtn" class="brand-mark" type="button" aria-label="显示当前版本" title="显示当前版本"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h6v6H4zM14 4h6v6h-6zM4 14h6v6H4zM14 14h6v6h-6z"/><path d="M7 10v4M17 10v4M10 7h4M10 17h4"/></svg></button>拼了个图 <span id="appVersion" class="app-version" aria-label="当前版本"></span></div><div class="top-actions"><button id="userChip" class="user-chip" type="button" title="绑定账号保住成绩"><span class="user-avatar">游</span><span id="userName" class="user-name">登录</span></button><button id="rankBtn" class="top-rank"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 21h8M12 17v4M7 4H4v3a4 4 0 0 0 4 4M17 4h3v3a4 4 0 0 1-4 4"/><path d="M8 3h8v7a4 4 0 0 1-8 0V3z"/></svg>排行榜</button></div></header>
     <section id="start" class="screen active">
       <div class="hero">
         <div class="hero-copy"><span class="eyebrow">A LITTLE PUZZLE BREAK</span><h1>拼出好时光</h1></div>
@@ -143,9 +175,12 @@
     <section id="ranking" class="screen"><div class="ranking-page"><div class="page-head"><button id="rankBack" class="back" aria-label="返回"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M11 18l-6-6 6-6"/></svg><span>返回</span></button><div class="ranking-title"><h1>最佳排行</h1></div></div><div class="rank-card"><div id="rankTabs" class="rank-tabs"><button class="rank-tab" data-size="2"><strong>2 × 2</strong><span>轻松</span></button><button class="rank-tab active" data-size="3"><strong>3 × 3</strong><span>经典</span></button><button class="rank-tab" data-size="4"><strong>4 × 4</strong><span>挑战</span></button><button class="rank-tab" data-size="6"><strong>6 × 6</strong><span>变态</span></button></div><div id="rankList" class="rank-list"></div></div></div></section>
     <section id="galleryScreen" class="screen"><div class="gallery-page"><div class="page-head"><button id="galleryBack" class="back" aria-label="返回"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M11 18l-6-6 6-6"/></svg><span>返回</span></button><div class="gallery-title"><h1>风景图库</h1><p>开启你的挑战</p></div></div><div id="photoGrid" class="photo-grid"></div><div class="gallery-controls"><div class="gallery-difficulty-row"><span class="gallery-difficulty-label">选择难度</span><div class="gallery-difficulty"><button id="galleryDifficultyBtn" class="difficulty-select" type="button" aria-haspopup="true" aria-expanded="false"><strong id="galleryDifficulty">经典 · 3 × 3</strong><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 15 6-6 6 6"/></svg></button><div id="galleryDifficultyMenu" class="difficulty-menu"><button class="difficulty-option" data-size="2" type="button">轻松 <span>2 × 2</span></button><button class="difficulty-option active" data-size="3" type="button">经典 <span>3 × 3</span></button><button class="difficulty-option" data-size="4" type="button">挑战 <span>4 × 4</span></button><button class="difficulty-option" data-size="6" type="button">变态 <span>6 × 6</span></button></div></div></div><button id="galleryConfirm" class="primary-btn gallery-confirm">确认并开始拼图</button></div></div></section>
     <section id="game" class="screen"><div class="game-head"><button id="gameBack" class="back"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M11 18l-6-6 6-6"/></svg><span>返回</span></button><div class="stats"><div class="stat"><small>步数</small><strong id="moves">0</strong></div><div class="stat"><small>用时</small><strong id="timer">00:00</strong></div></div></div><div class="game-layout"><div class="game-main"><div class="board-shell"><div id="board" class="board"></div></div><div class="tools game-tools"><button id="previewBtn" class="tool">查看原图</button><button id="numberBtn" class="tool">显示编号</button><button id="restartBtn" class="tool">重新打乱</button></div></div></div></section>
+
+    <section id="login" class="screen"><div class="login-page"><div class="page-head"><button id="loginBack" class="back" aria-label="返回"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M11 18l-6-6 6-6"/></svg><span>返回</span></button><div class="ranking-title"><h1>登录后可进排行榜</h1></div></div><div class="login-card"><div class="auth-options"><button id="phoneOption" class="auth-option" type="button" aria-expanded="false" aria-controls="phonePanel"><span class="auth-icon phone">号</span><span class="auth-copy"><strong>手机验证码</strong><span>推荐 · 无需记密码</span></span><span class="auth-arrow">›</span></button><div id="phonePanel" class="phone-panel" hidden><form id="phoneForm" class="phone-form" autocomplete="off"><input id="phoneInput" type="tel" inputmode="numeric" autocomplete="off" list="phoneHistory" maxlength="11" placeholder="请输入手机号"><datalist id="phoneHistory"></datalist><div class="code-row"><input id="phoneCode" type="text" inputmode="numeric" autocomplete="one-time-code" maxlength="6" placeholder="6 位验证码"><button id="sendCodeBtn" class="send-code" type="button">获取验证码</button></div><button id="phoneSubmit" class="bind-submit" type="submit">登录</button></form></div><button id="qqOption" class="auth-option" type="button"><span class="auth-icon qq">Q</span><span class="auth-copy"><strong>QQ 登录</strong><span>使用 QQ 账号快速绑定</span></span><span class="auth-arrow">›</span></button><button class="auth-option" type="button" disabled><span class="auth-icon wechat">微</span><span class="auth-copy"><strong>微信账号登录</strong><span>快捷登录</span></span><span class="auth-soon">暂未开通</span></button></div><p class="bind-privacy">绑定即表示同意使用对应账号标识保存你的游戏资料。</p></div></div></section>
   </main>
   <div id="previewPopover" class="preview-popover" role="dialog" aria-modal="true" aria-label="查看原图"><div class="preview-card"><button id="previewClose" class="preview-close" type="button" aria-label="关闭">×</button><img id="previewImage" alt="拼图原图"></div></div>
-  <div id="renameModal" class="modal" role="dialog" aria-modal="true" aria-labelledby="renameTitle"><form id="renameForm" class="rename-card"><h2 id="renameTitle">修改玩家名称</h2><input id="renameInput" class="rename-input" type="text" maxlength="16" autocomplete="nickname" aria-label="玩家名称" aria-describedby="renameError"><div id="renameError" class="rename-error" aria-live="polite"></div><div class="rename-actions"><button id="renameCancel" class="action-btn" type="button">取消</button><button class="action-btn primary" type="submit">保存</button></div></form></div>
+  <div id="renameModal" class="modal" role="dialog" aria-modal="true" aria-labelledby="renameTitle"><form id="renameForm" class="rename-card"><h2 id="renameTitle">修改玩家名称</h2><input id="renameInput" class="rename-input" type="text" maxlength="16" autocomplete="nickname" aria-label="玩家名称" aria-describedby="renameError"><div id="renameError" class="rename-error" aria-live="polite"></div><div class="rename-actions"><button class="action-btn primary" type="submit">保存</button><button id="logoutBtn" class="action-btn logout-btn" type="button">退出登录</button></div></form></div>
+  <div id="logoutModal" class="modal" role="dialog" aria-modal="true" aria-labelledby="logoutTitle"><div class="confirm-card"><h2 id="logoutTitle">确认退出登录？</h2><p>退出登录后游戏将不再参与排行榜</p><div class="confirm-actions"><button id="logoutCancel" class="action-btn" type="button">暂不退出</button><button id="logoutConfirm" class="action-btn primary" type="button">确认退出</button></div></div></div>
   <div id="modal" class="modal"><div class="success"><button id="modalClose" class="success-close" type="button" aria-label="关闭"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M6 6l12 12M18 6L6 18"/></svg></button><div class="success-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="m5 12 4 4L19 6"/></svg></div><h2>拼图完成！</h2><p>成绩已自动写入对应难度的排行榜。<br>干得漂亮！</p><div class="result"><div><strong id="resultMoves">0</strong><span>交换步数</span></div><div><strong id="resultTime">00:00</strong><span>完成用时</span></div></div><div class="modal-actions"><button id="rankViewBtn" class="action-btn">查看排行</button><button id="againBtn" class="action-btn primary">再玩一次</button></div></div></div><div id="toast" class="toast"></div>
   <script>
   (()=>{
@@ -181,14 +216,139 @@
       '刘禅','刘表','刘璋','刘协','刘焉','关平','关兴','张苞','赵云','马腾','马岱','黄盖','鲁肃','陆逊','甘宁','太史慈','孙坚','孙权','孙策','周泰','程普','吕蒙','诸葛瑾','诸葛恪','司马懿','司马师','司马昭','曹丕','曹植','曹仁','曹洪','曹彰','曹真','曹爽','夏侯惇','夏侯渊','许褚','典韦','张辽','徐晃','张郃','于禁','乐进','荀彧','荀攸','郭嘉','贾诩','程昱','陈宫','袁绍','袁术','颜良','文丑','公孙瓒','董卓','李儒','华雄','貂蝉','吕布','高顺','魏延','庞统','法正','姜维','王平','廖化','严颜','黄月英','糜竺','糜芳','简雍','孙乾','孟获','祝融','蒋琬','费祎','邓艾','钟会','羊祜','陆抗','华佗','左慈','于吉','祢衡','蔡邕','蔡琰','甄宓'
     ];
     const NAME_POOL=[...new Set(PLAYER_NAMES)];
-    const USER_KEY='puzzle-user-v1';
+    const USER_KEY='puzzle-user-v1',PHONE_HISTORY_KEY='puzzle-phone-history-v1',PENDING_SCORE_KEY='puzzle-pending-scores-v1';
     function createUser(){const base=NAME_POOL[Math.floor(Math.random()*NAME_POOL.length)],number=String(Math.floor(Math.random()*1000)).padStart(3,'0');return{id:globalThis.crypto&&crypto.randomUUID?crypto.randomUUID():`${Date.now()}-${Math.random().toString(36).slice(2)}`,name:`${base}${number}`,createdAt:new Date().toISOString()}}
     function getOrCreateUser(){let saved;try{saved=JSON.parse(localStorage.getItem(USER_KEY))}catch{}if(saved&&typeof saved.id==='string'&&saved.id&&typeof saved.name==='string'&&saved.name.trim())return saved;const user=createUser();try{localStorage.setItem(USER_KEY,JSON.stringify(user))}catch{}return user}
+    function readPhoneHistory(){try{const saved=JSON.parse(localStorage.getItem(PHONE_HISTORY_KEY));return Array.isArray(saved)?saved.map(String).filter(phone=>/^1[3-9]\d{9}$/.test(phone)).slice(0,5):[]}catch{return[]}}
+    function renderPhoneHistory(){const list=$('#phoneHistory');if(!list)return;list.replaceChildren(...readPhoneHistory().map(phone=>{const option=document.createElement('option');option.value=phone;return option}))}
+    function rememberPhone(phone){const history=[phone,...readPhoneHistory().filter(item=>item!==phone)].slice(0,5);try{localStorage.setItem(PHONE_HISTORY_KEY,JSON.stringify(history))}catch{}renderPhoneHistory()}
+
+    let cloudUid=null,imageBusy=false,authBusy=false,smsCountdownTimer=null,loginReturnScreen='#start',currentRankRows=[],rankRowsLoaded=false;
+    function loginErr(m){if(m)toast(m,2000)}
+    function syncUserChip(){
+      $('#userName').textContent=cloudUid?user.name:'登录';
+      $('#userChip').title=cloudUid?'修改名字：'+user.name:'绑定账号保住成绩';
+      $('.user-avatar').textContent=cloudUid?([...user.name][0]||'我'):'游';
+    }
+    function setLocalName(n){if(!n)return;user.name=n;try{localStorage.setItem(USER_KEY,JSON.stringify(user))}catch{}syncUserChip()}
+    async function apiJSON(path,opt){
+      const r=await fetch(path,Object.assign({credentials:'same-origin',headers:{'Content-Type':'application/json'}},opt||{}));
+      let d=null;try{d=await r.json()}catch{}
+      if(!r.ok){const e=new Error((d&&d.detail)||('请求失败 '+r.status));e.status=r.status;throw e}
+      return d||{}
+    }
+    async function initCloudAuth(){
+      syncUserChip();
+      try{
+        const me=await apiJSON('/api/auth/me');
+        if(me&&me.id){
+          cloudUid=me.id;setLocalName(me.name);await syncLocalScoresAfterBinding();
+          const bound=new URLSearchParams(location.search).get('bound');
+          if(bound){history.replaceState(null,'',location.pathname+location.hash);toast('账号绑定成功，本机成绩已保留')}
+        }
+      }catch(e){}
+      syncUserChip();
+      if($('#ranking').classList.contains('active'))renderRanks();
+    }
+    async function finishSignIn(u){
+      cloudUid=u.id;setLocalName(u.name);loginErr('');await syncLocalScoresAfterBinding();const target=loginReturnScreen;loginReturnScreen='#start';show(target);if(target==='#ranking')renderRanks();toast('账号绑定成功，本机成绩已保留');
+    }
+    function openBinding(returnTo='#start'){loginReturnScreen=returnTo;const panel=$('#phonePanel'),option=$('#phoneOption');panel.hidden=true;option.classList.remove('active');option.setAttribute('aria-expanded','false');show('#login')}
+    function startSmsCountdown(seconds){
+      clearInterval(smsCountdownTimer);let left=seconds;const button=$('#sendCodeBtn');button.disabled=true;button.textContent=left+' 秒后重发';
+      smsCountdownTimer=setInterval(()=>{left--;if(left<=0){clearInterval(smsCountdownTimer);button.disabled=false;button.textContent='获取验证码'}else button.textContent=left+' 秒后重发'},1000);
+    }
+    $('#loginBack').onclick=()=>{const target=loginReturnScreen;loginReturnScreen='#start';show(target);if(target==='#ranking')renderRanks()};
+    $('#phoneOption').onclick=()=>{const panel=$('#phonePanel'),option=$('#phoneOption'),willOpen=panel.hidden;panel.hidden=!willOpen;option.classList.toggle('active',willOpen);option.setAttribute('aria-expanded',String(willOpen));if(willOpen)$('#phoneInput').focus()};
+    $('#sendCodeBtn').onclick=async()=>{
+      const phone=$('#phoneInput').value.trim();loginErr('');
+      if(!/^1[3-9]\d{9}$/.test(phone)){loginErr('请输入正确的中国大陆手机号');return}
+      const button=$('#sendCodeBtn');button.disabled=true;button.textContent='发送中…';
+      try{
+        const result=await apiJSON('/api/auth/phone/code',{method:'POST',body:JSON.stringify({phone})});
+        if(result.debugCode){$('#phoneCode').value=result.debugCode;toast('测试验证码已自动填入',2000)}
+        else toast('验证码已发送',2000);
+        startSmsCountdown(result.resendIn||60);$('#phoneCode').focus();
+      }catch(err){button.disabled=false;button.textContent='获取验证码';loginErr(err.message||'验证码发送失败')}
+    };
+    $('#phoneForm').onsubmit=async e=>{
+      e.preventDefault();if(authBusy)return;
+      const phone=$('#phoneInput').value.trim(),code=$('#phoneCode').value.trim();loginErr('');
+      if(!/^1[3-9]\d{9}$/.test(phone)){loginErr('请输入正确的中国大陆手机号');return}
+      if(!/^\d{6}$/.test(code)){loginErr('请输入 6 位验证码');return}
+      authBusy=true;$('#phoneSubmit').disabled=true;$('#phoneSubmit').textContent='登录中…';
+      try{const u=await apiJSON('/api/auth/phone/verify',{method:'POST',body:JSON.stringify({phone,code,name:user.name})});rememberPhone(phone);await finishSignIn(u)}
+      catch(err){loginErr(err.message||'绑定失败，请重试')}
+      finally{authBusy=false;$('#phoneSubmit').disabled=false;$('#phoneSubmit').textContent='登录'}
+    };
+    $('#qqOption').onclick=async()=>{
+      if(authBusy)return;authBusy=true;loginErr('');$('#qqOption').classList.add('active');
+      try{const result=await apiJSON('/api/auth/qq/start');if(!result.authorizeUrl)throw new Error('QQ 授权地址获取失败');location.assign(result.authorizeUrl)}
+      catch(err){loginErr(err.message||'QQ 登录暂不可用');$('#qqOption').classList.remove('active');authBusy=false}
+    };
+    async function loadCloudRanks(){
+      const list=$('#rankList'),size=state.rankSize;if(!list)return;
+      currentRankRows=[];rankRowsLoaded=false;
+      renderRankLoading();
+      try{
+        const r=await apiJSON('/api/rankings?size='+size);
+        if(size!==state.rankSize)return;
+        const rows=(r.rows||[]).map(x=>({userId:x.user_id,userName:x.user_name,seconds:x.seconds,durationMs:x.duration_ms,moves:x.moves,playedAt:x.played_at}));
+        currentRankRows=rows;rankRowsLoaded=true;renderRankRows(rows);
+      }catch(e){if(size===state.rankSize)renderRankError()}
+    }
+    async function pushScoreToCloud(rec){
+      if(!cloudUid){queuePendingScore(rec);return}
+      try{
+        await apiJSON('/api/scores',{method:'POST',body:JSON.stringify({size:rec.size,seconds:rec.seconds,duration_ms:rec.durationMs,moves:rec.moves,client_id:rec.clientId||null})});
+        removePendingScore(rec.clientId);
+        toast('成绩已上榜');
+      }catch(e){queuePendingScore(rec);toast('成绩未能同步云端')}
+    }
+    function readPendingScores(){try{const rows=JSON.parse(localStorage.getItem(PENDING_SCORE_KEY)),valid=Array.isArray(rows)?rows.filter(row=>row&&[2,3,4,6].includes(Number(row.size))):[],latest=new Map();valid.forEach(row=>{const size=Number(row.size),current=latest.get(size);if(!current||String(row.playedAt||'')>=String(current.playedAt||''))latest.set(size,{...row,size})});const normalized=[...latest.values()];if(normalized.length!==valid.length)savePendingScores(normalized);return normalized}catch{return[]}}
+    function savePendingScores(rows){try{localStorage.setItem(PENDING_SCORE_KEY,JSON.stringify(rows))}catch{}}
+    function queuePendingScore(rec){const size=Number(rec.size),rows=readPendingScores().filter(row=>Number(row.size)!==size);rows.push({...rec,size});savePendingScores(rows)}
+    function removePendingScore(clientId){if(!clientId)return;const rows=readPendingScores(),next=rows.filter(row=>row.clientId!==clientId);if(next.length!==rows.length)savePendingScores(next)}
+    function ensureLocalScoreIds(){
+      const all=readRanks();let changed=false;
+      Object.keys(all).forEach(size=>{const rows=Array.isArray(all[size])?all[size]:[];if(rows.length>1){rows.sort((a,b)=>String(b.playedAt||'').localeCompare(String(a.playedAt||'')));all[size]=rows.slice(0,1);changed=true}(all[size]||[]).forEach(row=>{if(!row.clientId){row.clientId=globalThis.crypto&&crypto.randomUUID?crypto.randomUUID():`${Date.now()}-${Math.random().toString(36).slice(2)}`;changed=true}})});
+      if(changed)try{localStorage.setItem(KEY,JSON.stringify(all))}catch{}
+      return all;
+    }
+    async function syncLocalScoresAfterBinding(){
+      if(!cloudUid)return;
+      const all=ensureLocalScoreIds(),pending=readPendingScores(),byClientId=new Map();
+      Object.entries(all).forEach(([size,rows])=>{if(Array.isArray(rows))rows.forEach(row=>byClientId.set(row.clientId,{...row,size:Number(size)}))});
+      pending.forEach(row=>byClientId.set(row.clientId,row));
+      const records=[...byClientId.values()];
+      if(!records.length)return;
+      const results=await Promise.allSettled(records.map(rec=>apiJSON('/api/scores',{method:'POST',body:JSON.stringify({size:rec.size,seconds:Number(rec.seconds)||0,duration_ms:rankDurationMs(rec),moves:Number(rec.moves)||0,client_id:rec.clientId})})));
+      const created=results.filter(x=>x.status==='fulfilled'&&x.value.created).length;
+      const syncedIds=new Set(records.filter((_,index)=>results[index].status==='fulfilled').map(rec=>rec.clientId));
+      savePendingScores(pending.filter(row=>!syncedIds.has(row.clientId)));
+      if(created)toast(`已保住 ${created} 条本机成绩`);
+    }
+    async function pushImageToCloud(dataUrl){
+      if(!cloudUid||imageBusy)return;
+      imageBusy=true;
+      try{
+        const blob=await (await fetch(dataUrl)).blob();
+        const fd=new FormData();fd.append('file',blob,'upload.jpg');
+        const r=await fetch('/api/images',{method:'POST',body:fd,credentials:'same-origin'});
+        if(!r.ok)throw new Error('upload failed');
+        toast('图片已存入云端');
+      }catch(e){toast('图片未同步云端')}
+      finally{imageBusy=false}
+    }
+    async function syncCloudName(nextName){
+      if(!cloudUid)return;
+      return apiJSON('/api/me/name',{method:'PUT',body:JSON.stringify({name:nextName})});
+    }
     const user=getOrCreateUser();
     const LAST_SIZE_KEY='puzzle-last-difficulty-v1';
     const savedSize=Number(localStorage.getItem(LAST_SIZE_KEY));
     const initialSize=[2,3,4,6].includes(savedSize)?savedSize:3;
-    const state={image:quickImages[0].src,size:initialSize,order:[],selected:null,moves:0,seconds:0,elapsedMs:0,startedAt:0,timer:null,playing:false,numbers:false,rankingEligible:true,rankSize:3,galleryIndex:0,quickIndex:0};
+    const state={image:quickImages[0].src,size:initialSize,order:[],selected:null,moves:0,seconds:0,elapsedMs:0,startedAt:0,timer:null,playing:false,numbers:false,rankingEligible:true,rankSize:3,rankPage:1,galleryIndex:0,quickIndex:0};
     const KEY='puzzle-rankings-v1';
     function show(id){$$('.screen').forEach(x=>x.classList.remove('active'));$(id).classList.add('active');window.scrollTo({top:0,behavior:'smooth'})}
     function format(s){return`${String(Math.floor(s/60)).padStart(2,'0')}:${String(s%60).padStart(2,'0')}`}
@@ -199,7 +359,8 @@
     function lastPlayedSize(){const value=Number(localStorage.getItem(LAST_SIZE_KEY));return[2,3,4,6].includes(value)?value:3}
     function syncDifficultyButtons(){$$('.level').forEach(x=>x.classList.toggle('selected',+x.dataset.size===state.size))}
     function renderQuickGallery(){
-      $('#quickGallery').innerHTML=quickImages.map((x,i)=>`<button class="image-choice ${i===state.quickIndex?'selected':''}" data-i="${i}" aria-label="${x.name}"><img src="${x.src}" alt="${x.name}" referrerpolicy="no-referrer" onerror="this.onerror=null;this.src='${images[i%images.length].src}'"></button>`).join('');
+      $('#quickGallery').innerHTML=quickImages.map((x,i)=>`<button class="image-choice ${i===state.quickIndex?'selected':''}" data-i="${i}" aria-label="${x.name}"><img src="${x.src}" alt="${x.name}" referrerpolicy="no-referrer"></button>`).join('');
+      $$('#quickGallery .image-choice img').forEach((img,i)=>{img.onerror=()=>{img.onerror=null;img.src=images[i%images.length].src;if(img.closest('.image-choice').classList.contains('selected')){state.image=img.src;if(state.playing)renderBoard()}}});
     }
     $('#quickGallery').onclick=e=>{const b=e.target.closest('.image-choice');if(!b)return;state.quickIndex=+b.dataset.i;const img=b.querySelector('img');state.image=img.src;$$('#quickGallery .image-choice').forEach(x=>x.classList.toggle('selected',x===b));$('#uploadText').textContent='本地上传';$('#uploadText').closest('.source-btn').classList.remove('active')};
     function renderGalleryPage(){
@@ -221,32 +382,41 @@
     document.addEventListener('click',closeGalleryDifficultyMenu);
     $('#difficulty').onclick=e=>{const b=e.target.closest('.level');if(!b)return;state.size=+b.dataset.size;$$('.level').forEach(x=>x.classList.toggle('selected',x===b))};
     function shortFileName(name,max=10){const dot=name.lastIndexOf('.');const base=dot>0?name.slice(0,dot):name,ext=dot>0?name.slice(dot):'';if(name.length<=max)return name;const keep=max-ext.length-1;return keep>0?base.slice(0,keep)+'…'+ext:base.slice(0,Math.max(1,max-1))+'…'}
-    $('#fileInput').onchange=e=>{const file=e.target.files[0];if(!file)return;if(!file.type.startsWith('image/')||file.size>15*1024*1024){toast('请选择 15MB 以内的图片');return}const reader=new FileReader();reader.onload=()=>{const img=new Image();img.onload=()=>{const crop=Math.min(img.width,img.height),out=Math.min(1600,crop),c=document.createElement('canvas');c.width=c.height=out;const ctx=c.getContext('2d');ctx.drawImage(img,(img.width-crop)/2,(img.height-crop)/2,crop,crop,0,0,out,out);state.image=c.toDataURL('image/jpeg',.88);$$('#quickGallery .image-choice').forEach(x=>x.classList.remove('selected'));$('#uploadText').textContent=shortFileName(file.name);$('#uploadText').closest('.source-btn').classList.add('active')};img.src=reader.result};reader.readAsDataURL(file)};
+    $('#fileInput').onchange=e=>{const file=e.target.files[0];if(!file)return;if(!file.type.startsWith('image/')||file.size>15*1024*1024){toast('请选择 15MB 以内的图片');return}const reader=new FileReader();reader.onload=()=>{const img=new Image();img.onload=()=>{const crop=Math.min(img.width,img.height),out=Math.min(1600,crop),c=document.createElement('canvas');c.width=c.height=out;const ctx=c.getContext('2d');ctx.drawImage(img,(img.width-crop)/2,(img.height-crop)/2,crop,crop,0,0,out,out);state.image=c.toDataURL('image/jpeg',.88);pushImageToCloud(state.image);$$('#quickGallery .image-choice').forEach(x=>x.classList.remove('selected'));$('#uploadText').textContent=shortFileName(file.name);$('#uploadText').closest('.source-btn').classList.add('active')};img.src=reader.result};reader.readAsDataURL(file)};
     function shuffle(n){const a=Array.from({length:n},(_,i)=>i);do{for(let i=n-1;i;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}}while(a.every((x,i)=>x===i));return a}
     function stats(){$('#moves').textContent=state.moves;$('#timer').textContent=format(state.seconds)}
     function renderBoard(){const n=state.size,b=$('#board');b.style.gridTemplateColumns=`repeat(${n},1fr)`;b.classList.toggle('show-numbers',state.numbers);b.innerHTML=state.order.map((p,pos)=>{const x=p%n,y=Math.floor(p/n);return`<button class="tile ${state.selected===pos?'selected':''} ${p===pos?'correct':''}" data-pos="${pos}" style="background-image:url('${state.image}');background-size:${n*100}% ${n*100}%;background-position:${x*100/(n-1)}% ${y*100/(n-1)}%"><span class="tile-no">${p+1}</span></button>`}).join('')}
     function reset(){clearInterval(state.timer);state.order=shuffle(state.size**2);state.selected=null;state.moves=state.seconds=state.elapsedMs=0;state.startedAt=performance.now();state.numbers=false;state.rankingEligible=true;state.playing=true;$('#previewPopover').classList.remove('show');$('#numberBtn').classList.remove('active');$('#numberBtn').textContent='显示编号';stats();renderBoard();state.timer=setInterval(()=>{state.elapsedMs=performance.now()-state.startedAt;state.seconds=Math.floor(state.elapsedMs/1000);stats()},250)}
-    function start(){localStorage.setItem(LAST_SIZE_KEY,String(state.size));state.numbers=false;$('#numberBtn').classList.remove('active');$('#numberBtn').textContent='显示编号';show('#game');reset()}
+    function start(){const selected=$('#quickGallery .image-choice.selected img');if(selected){if(selected.complete&&!selected.naturalWidth)selected.src=images[state.quickIndex%images.length].src;state.image=selected.src}localStorage.setItem(LAST_SIZE_KEY,String(state.size));state.numbers=false;$('#numberBtn').classList.remove('active');$('#numberBtn').textContent='显示编号';show('#game');reset()}
     $('#board').onclick=e=>{const b=e.target.closest('.tile');if(!b||!state.playing)return;const p=+b.dataset.pos;if(state.selected===null){state.selected=p;renderBoard();return}if(state.selected===p){state.selected=null;renderBoard();return}[state.order[state.selected],state.order[p]]=[state.order[p],state.order[state.selected]];state.selected=null;state.moves++;stats();renderBoard();if(state.order.every((x,i)=>x===i))finish()};
-    function readRanks(){try{const x=JSON.parse(localStorage.getItem(KEY));return x&&typeof x==='object'?x:{2:[],3:[],4:[],6:[]}}catch{return{2:[],3:[],4:[],6:[]}}}
-    function writeRank(){const all=readRanks(),k=String(state.size);all[k]=Array.isArray(all[k])?all[k]:[];all[k].push({userId:user.id,userName:user.name,seconds:state.seconds,durationMs:Math.round(state.elapsedMs),moves:state.moves,playedAt:new Date().toISOString()});all[k]=all[k].sort((a,b)=>rankDurationMs(a)-rankDurationMs(b)||a.moves-b.moves).slice(0,5);try{localStorage.setItem(KEY,JSON.stringify(all))}catch{}}
+    function readRanks(){try{const x=JSON.parse(localStorage.getItem(KEY)),all=x&&typeof x==='object'?x:{2:[],3:[],4:[],6:[]};let changed=false;Object.keys(all).forEach(size=>{const rows=Array.isArray(all[size])?all[size]:[];if(rows.length>1){rows.sort((a,b)=>String(b.playedAt||'').localeCompare(String(a.playedAt||'')));all[size]=rows.slice(0,1);changed=true}});if(changed)try{localStorage.setItem(KEY,JSON.stringify(all))}catch{}return all}catch{return{2:[],3:[],4:[],6:[]}}}
+    function writeRank(){const all=readRanks(),k=String(state.size),rec={userId:user.id,userName:user.name,seconds:state.seconds,durationMs:Math.round(state.elapsedMs),moves:state.moves,playedAt:new Date().toISOString(),clientId:globalThis.crypto&&crypto.randomUUID?crypto.randomUUID():`${Date.now()}-${Math.random().toString(36).slice(2)}`};all[k]=[rec];try{localStorage.setItem(KEY,JSON.stringify(all))}catch{}pushScoreToCloud({...rec,size:state.size});}
     function dateLabel(v){const d=new Date(v);if(isNaN(d))return'未知时间';return new Intl.DateTimeFormat('zh-CN',{month:'2-digit',day:'2-digit',hour:'2-digit',minute:'2-digit',hour12:false}).format(d)}
-    function renameUser(nextName){try{localStorage.setItem(USER_KEY,JSON.stringify({...user,name:nextName}))}catch{return false}user.name=nextName;const all=readRanks();let changed=false;Object.values(all).forEach(rows=>{if(!Array.isArray(rows))return;rows.forEach(row=>{if(row&&user.id&&row.userId===user.id){row.userName=nextName;changed=true}})});if(changed)try{localStorage.setItem(KEY,JSON.stringify(all))}catch{}return true}
+    async function renameUser(nextName){await syncCloudName(nextName);try{localStorage.setItem(USER_KEY,JSON.stringify({...user,name:nextName}))}catch{return false}user.name=nextName;const all=readRanks();let changed=false;Object.values(all).forEach(rows=>{if(!Array.isArray(rows))return;rows.forEach(row=>{if(row&&user.id&&row.userId===user.id){row.userName=nextName;changed=true}})});if(changed)try{localStorage.setItem(KEY,JSON.stringify(all))}catch{}return true}
     function escapeHtml(value){return String(value).replace(/[&<>'"]/g,char=>({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','"':'&quot;'}[char]))}
     function shortPlayerName(value){const characters=[...String(value)];return characters.length>6?characters.slice(0,6).join('')+'…':characters.join('')}
-    function renderRanks(){const rows=readRanks()[String(state.rankSize)]||[],list=$('#rankList');if(!rows.length){list.innerHTML=`<div class="empty"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M8 21h8M12 17v4M7 4H4v3a4 4 0 0 0 4 4M17 4h3v3a4 4 0 0 1-4 4"/><path d="M8 3h8v7a4 4 0 0 1-8 0V3z"/></svg><strong>还没有排行记录</strong>完成一次 ${state.rankSize} × ${state.rankSize} 拼图后，成绩会出现在这里</div>`;return}list.innerHTML=`<div class="rank-head"><div>序号</div><div>玩家 / 游玩时间</div><div>用时</div></div>`+rows.map((r,i)=>{const duration=rankDurationMs(r),seconds=Math.floor(duration/1000),fullName=String(r.userName||'匿名玩家');return`<div class="rank-row"><div class="rank-no">${i+1}</div><div class="rank-info"><strong title="${escapeHtml(fullName)}">${escapeHtml(shortPlayerName(fullName))}</strong>${dateLabel(r.playedAt)}</div><div class="rank-time">${format(seconds)}<span class="rank-milliseconds">.${formatMilliseconds(duration)}</span><span class="rank-meta">${Number(r.moves)||0} 步完成</span></div></div>`}).join('')}
-    function finish(){state.elapsedMs=performance.now()-state.startedAt;state.seconds=Math.floor(state.elapsedMs/1000);state.playing=false;clearInterval(state.timer);state.selected=null;$('#previewPopover').classList.remove('show');renderBoard();if(state.rankingEligible)writeRank();$('.success p').innerHTML=state.rankingEligible?'成绩已自动写入对应难度的排行榜。<br>干得漂亮！':'本局使用过辅助提示，成绩不计入排行榜。<br>拼图仍然完成啦！';$('#resultMoves').textContent=state.moves;$('#resultTime').textContent=format(state.seconds);setTimeout(()=>$('#modal').classList.add('show'),320)}
-    $('#startBtn').onclick=start;$('#galleryBtn').onclick=openGallery;$('#galleryBack').onclick=()=>show('#start');$('#galleryConfirm').onclick=()=>{const selected=sceneryImages[state.galleryIndex],displayed=$(`.photo-choice[data-i="${state.galleryIndex}"] img`);state.image=displayed&&displayed.src?displayed.src:selected.src;$$('#quickGallery .image-choice').forEach(x=>x.classList.remove('selected'));$('#uploadText').textContent='本地上传';start()};$('#rankBtn').onclick=()=>{clearInterval(state.timer);state.playing=false;renderRanks();show('#ranking')};$('#rankBack').onclick=()=>show('#start');$('#gameBack').onclick=()=>{clearInterval(state.timer);state.playing=false;$('#previewPopover').classList.remove('show');show('#start')};
-    $('#rankTabs').onclick=e=>{const b=e.target.closest('.rank-tab');if(!b)return;state.rankSize=+b.dataset.size;$$('.rank-tab').forEach(x=>x.classList.toggle('active',x===b));renderRanks()};
+    function estimatedPendingRank(row){if(!rankRowsLoaded)return null;const duration=rankDurationMs(row),moves=Number(row.moves)||0,better=currentRankRows.filter(r=>{const rankedDuration=rankDurationMs(r),rankedMoves=Number(r.moves)||0;return rankedDuration<duration||(rankedDuration===duration&&rankedMoves<=moves)}).length,rank=better+1;return rank<=50?rank:null}
+    function pendingRanksHtml(){if(cloudUid)return'';const rows=readPendingScores().filter(row=>Number(row.size)===state.rankSize);if(!rows.length)return'';return'<div class="pending-ranks"><div class="pending-ranks-title">本机待入库</div>'+rows.map(r=>{const duration=rankDurationMs(r),seconds=Math.floor(duration/1000),fullName=String(r.userName||user.name||'匿名玩家'),estimatedRank=estimatedPendingRank(r),estimate=estimatedRank?'<div class="pending-estimate">预计排行第 '+estimatedRank+' 名</div>':'';return'<div class="rank-row pending"><div class="rank-no">—</div><div class="rank-info"><strong title="'+escapeHtml(fullName)+'">'+escapeHtml(shortPlayerName(fullName))+'</strong>'+dateLabel(r.playedAt)+'</div><div class="rank-time">'+format(seconds)+'<span class="rank-milliseconds">.'+formatMilliseconds(duration)+'</span><button class="pending-login" type="button">（待入库）</button><span class="rank-meta">'+(Number(r.moves)||0)+' 步完成</span></div>'+estimate+'</div>'}).join('')+'</div>'}
+    function bindRankActions(){$$('.pending-login').forEach(button=>button.onclick=()=>openBinding('#ranking'));const login=$('#rankLoginBtn');if(login)login.onclick=()=>openBinding('#ranking');$$('[data-rank-page]').forEach(button=>button.onclick=()=>{const step=button.dataset.rankPage==='next'?1:-1;state.rankPage+=step;renderRankRows(currentRankRows)})}
+    function renderRankLoading(){const list=$('#rankList');if(!list)return;list.innerHTML='<div class="rank-empty-bar"><span>全球前 50 名</span></div><div class="rank-loading">正在加载排行榜…</div>'+pendingRanksHtml();bindRankActions()}
+    function renderRankError(){const list=$('#rankList');if(!list)return;list.innerHTML='<div class="rank-empty-bar"><span>全球前 50 名</span></div><div class="empty"><strong>排行榜加载失败</strong>请稍后重试</div>'+pendingRanksHtml();bindRankActions()}
+    function renderRanks(){loadCloudRanks()}
+    function renderRankRows(rows){const list=$('#rankList');if(!list)return;const cta=!cloudUid&&!readPendingScores().some(row=>Number(row.size)===state.rankSize)?'<button id="rankLoginBtn" class="rank-login" type="button">登录后上传成绩</button>':'';const bar='<div class="rank-empty-bar"><span>全球前 50 名</span>'+cta+'</div>',pending=pendingRanksHtml();if(!rows||!rows.length){list.innerHTML=bar+'<div class="empty"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M8 21h8M12 17v4M7 4H4v3a4 4 0 0 0 4 4M17 4h3v3a4 4 0 0 1-4 4"/><path d="M8 3h8v7a4 4 0 0 1-8 0V3z"/></svg><strong>云端还没有记录</strong>完成一次 '+state.rankSize+' × '+state.rankSize+' 拼图后，成绩会出现在这里</div>'+pending;bindRankActions();return}const pageSize=10,totalPages=Math.ceil(Math.min(rows.length,50)/pageSize);state.rankPage=Math.min(Math.max(1,state.rankPage),totalPages);const start=(state.rankPage-1)*pageSize,pageRows=rows.slice(start,start+pageSize),pagination=totalPages>1?'<div class="rank-pagination"><button type="button" data-rank-page="prev"'+(state.rankPage===1?' disabled':'')+'>上一页</button><span>'+state.rankPage+' / '+totalPages+'</span><button type="button" data-rank-page="next"'+(state.rankPage===totalPages?' disabled':'')+'>下一页</button></div>':'';list.innerHTML=bar+'<div class="rank-head"><div>序号</div><div>玩家 / 游玩时间</div><div>用时</div></div>'+pageRows.map((r,i)=>{const duration=rankDurationMs(r),seconds=Math.floor(duration/1000),fullName=String(r.userName||'匿名玩家'),mine=!!(cloudUid&&r.userId===cloudUid);return'<div class="rank-row'+(mine?' mine':'')+'"><div class="rank-no">'+(start+i+1)+'</div><div class="rank-info"><strong title="'+escapeHtml(fullName)+'">'+escapeHtml(shortPlayerName(fullName))+'</strong>'+dateLabel(r.playedAt)+'</div><div class="rank-time">'+format(seconds)+'<span class="rank-milliseconds">.'+formatMilliseconds(duration)+'</span><span class="rank-meta">'+(Number(r.moves)||0)+' 步完成</span></div></div>'}).join('')+pagination+pending;bindRankActions()}
+    function finish(){state.elapsedMs=performance.now()-state.startedAt;state.seconds=Math.floor(state.elapsedMs/1000);state.playing=false;clearInterval(state.timer);state.selected=null;$('#previewPopover').classList.remove('show');renderBoard();if(state.rankingEligible)writeRank();$('.success p').innerHTML=state.rankingEligible?(cloudUid?'成绩已自动写入全球排行榜。<br>干得漂亮！':'成绩已保存在本机。<br>绑定账号后可上榜，也能换设备找回。'):'本局使用过辅助提示，成绩不计入排行榜。<br>拼图仍然完成啦！';$('#resultMoves').textContent=state.moves;$('#resultTime').textContent=format(state.seconds);setTimeout(()=>$('#modal').classList.add('show'),320)}
+    $('#startBtn').onclick=start;$('#galleryBtn').onclick=openGallery;$('#galleryBack').onclick=()=>show('#start');$('#galleryConfirm').onclick=()=>{const selected=sceneryImages[state.galleryIndex],displayed=$(`.photo-choice[data-i="${state.galleryIndex}"] img`);state.image=displayed&&displayed.src?displayed.src:selected.src;$$('#quickGallery .image-choice').forEach(x=>x.classList.remove('selected'));$('#uploadText').textContent='本地上传';start()};$('#rankBtn').onclick=()=>{clearInterval(state.timer);state.playing=false;state.rankPage=1;renderRanks();show('#ranking')};$('#rankBack').onclick=()=>show('#start');$('#gameBack').onclick=()=>{clearInterval(state.timer);state.playing=false;$('#previewPopover').classList.remove('show');show('#start')};
+    $('#rankTabs').onclick=e=>{const b=e.target.closest('.rank-tab');if(!b)return;state.rankSize=+b.dataset.size;state.rankPage=1;$$('.rank-tab').forEach(x=>x.classList.toggle('active',x===b));renderRanks()};
     $('#previewBtn').onclick=()=>{state.rankingEligible=false;$('#previewImage').src=state.image;$('#previewPopover').classList.add('show')};$('#previewClose').onclick=()=>$('#previewPopover').classList.remove('show');$('#previewPopover').onclick=e=>{if(e.target===$('#previewPopover'))$('#previewPopover').classList.remove('show')};document.addEventListener('keydown',e=>{if(e.key==='Escape')$('#previewPopover').classList.remove('show')});$('#restartBtn').onclick=()=>{reset();toast('已打乱，重新挑战吧')};$('#numberBtn').onclick=()=>{state.rankingEligible=false;state.numbers=!state.numbers;$('#board').classList.toggle('show-numbers',state.numbers);$('#numberBtn').classList.toggle('active',state.numbers);$('#numberBtn').textContent=state.numbers?'隐藏编号':'显示编号'};
     function closeRename(){$('#renameModal').classList.remove('show');$('#renameError').textContent='';$('#userChip').focus()}
     $('#versionBtn').onclick=()=>toast(`当前版本：${APP_VERSION}`,3000);
-    $('#userChip').onclick=()=>{const input=$('#renameInput');input.value=user.name;$('#renameError').textContent='';$('#renameModal').classList.add('show');requestAnimationFrame(()=>{input.focus();input.select()})};
-    $('#renameCancel').onclick=closeRename;$('#renameModal').onclick=e=>{if(e.target===$('#renameModal'))closeRename()};$('#renameForm').onsubmit=e=>{e.preventDefault();const nextName=$('#renameInput').value.trim().replace(/\s+/g,' ');if(!nextName||[...nextName].length>16){$('#renameError').textContent='请输入 1—16 个字符的名字';return}if(!renameUser(nextName)){$('#renameError').textContent='保存失败，请允许浏览器本地存储后重试';return}$('#userName').textContent=user.name;$('#userChip').title=`修改名字：${user.name}`;if($('#ranking').classList.contains('active'))renderRanks();closeRename();toast('名字修改成功')};document.addEventListener('keydown',e=>{if(e.key==='Escape'&&$('#renameModal').classList.contains('show'))closeRename()});
+    $('#userChip').onclick=()=>{if(!cloudUid){openBinding();return}const input=$('#renameInput');input.value=user.name;$('#renameError').textContent='';$('#renameModal').classList.add('show');requestAnimationFrame(()=>{input.focus();input.select()})};
+    function closeLogoutConfirm(){$('#logoutModal').classList.remove('show');$('#logoutBtn').focus()}
+    $('#renameModal').onclick=e=>{if(e.target===$('#renameModal'))closeRename()};$('#renameForm').onsubmit=async e=>{e.preventDefault();const nextName=$('#renameInput').value.trim().replace(/\s+/g,' ');if(!nextName||[...nextName].length>16){$('#renameError').textContent='请输入 1—16 个字符的名字';return}const save=e.submitter||$('#renameForm button[type="submit"]');save.disabled=true;save.textContent='保存中…';try{if(!await renameUser(nextName))throw new Error('请允许浏览器本地存储后重试');syncUserChip();if($('#ranking').classList.contains('active'))renderRanks();closeRename();toast('名字修改成功')}catch(err){$('#renameError').textContent=err.message||'保存失败，请重试'}finally{save.disabled=false;save.textContent='保存'}};
+    $('#logoutBtn').onclick=()=>$('#logoutModal').classList.add('show');$('#logoutCancel').onclick=closeLogoutConfirm;$('#logoutModal').onclick=e=>{if(e.target===$('#logoutModal'))closeLogoutConfirm()};$('#logoutConfirm').onclick=async()=>{const button=$('#logoutConfirm');button.disabled=true;button.textContent='正在退出…';try{await apiJSON('/api/auth/logout',{method:'POST'});cloudUid=null;closeLogoutConfirm();closeRename();syncUserChip();if($('#ranking').classList.contains('active'))renderRanks();toast('已退出登录')}catch(err){toast(err.message||'退出失败，请重试',2000)}finally{button.disabled=false;button.textContent='确认退出'}};
+    document.addEventListener('keydown',e=>{if(e.key!=='Escape')return;if($('#logoutModal').classList.contains('show'))closeLogoutConfirm();else if($('#renameModal').classList.contains('show'))closeRename()});
     $('#modalClose').onclick=()=>$('#modal').classList.remove('show');
     $('#againBtn').onclick=()=>{$('#modal').classList.remove('show');reset()};
-    $('#rankViewBtn').onclick=()=>{$('#modal').classList.remove('show');state.rankSize=state.size;$$('.rank-tab').forEach(x=>x.classList.toggle('active',+x.dataset.size===state.rankSize));renderRanks();show('#ranking')};
-    $('#userName').textContent=user.name;$('#userChip').title=`修改名字：${user.name}`;renderQuickGallery();syncDifficultyButtons();
+    $('#rankViewBtn').onclick=()=>{$('#modal').classList.remove('show');state.rankSize=state.size;state.rankPage=1;$$('.rank-tab').forEach(x=>x.classList.toggle('active',+x.dataset.size===state.rankSize));renderRanks();show('#ranking')};
+    readRanks();readPendingScores();syncUserChip();renderPhoneHistory();renderQuickGallery();syncDifficultyButtons();initCloudAuth();
   })();
   </script>
 </body>
