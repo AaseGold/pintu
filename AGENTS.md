@@ -9,3 +9,17 @@
 - 同一组普通改动只递增一次修订号。若该组改动在同一任务中直接发布上线，以发布版本递增为最终结果，不再额外保留修订号。
 - 纯查看、解释、诊断或仅提交但不发布现有改动时，不递增版本号。
 - 修改或发布后确认 `VERSION`、README 与 `index.html` 的版本号一致。
+
+## 推送上线
+
+用户说“推送上线 / 推到线上 / 发布上线”时，默认指走完整发布流程，不再逐步确认：
+
+1. 运行 `node scripts/bump-version.mjs --release`，递增发布版本。
+2. 在 `CHANGELOG.md` 顶部补一条本次发布记录（合并本轮开发中条目，写明关联提交）。
+3. 提交改动并推送 `origin/main`。
+   - 本机推送必须显式指定 GCM，否则会静默挂起：
+     `git -c credential.helper= -c credential.helper='!C:/Users/fangzhichuan/.workbuddy/binaries/PortableGit/versions/1.2.0/mingw64/bin/git-credential-manager.exe' push origin main`
+4. 部署到线上服务器：`bash tmp/deploy-pintu.sh`（私钥与主机已内置，脚本会备份、上传、重启 `pintu` 服务并校验版本）。
+5. 公网验证 `https://pintu.21times.com/` 的 `app-version` 与 `VERSION` 一致，并确认 `/api/health` 正常。
+
+若某一步拿不到凭据或连通性异常，先自行排查并说明卡点，再询问用户。
